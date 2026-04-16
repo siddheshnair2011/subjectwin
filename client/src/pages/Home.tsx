@@ -53,39 +53,33 @@ export default function Home() {
         {/* Content Overlay */}
         <div className="relative z-10">
           {/* Statistics Section - Appears as user scrolls */}
-          <section className="min-h-screen flex items-center justify-center">
-            <div className="container max-w-5xl mx-auto px-4">
-              <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-                {/* Left side - empty space for hero visibility */}
-                <div />
-
-                {/* Right side - Statistics Cards */}
-                <div className="space-y-6">
+          <section className="min-h-screen flex items-center justify-end bg-background/98">
+            <div className="pr-8">
+              <div className="max-w-sm space-y-4">
                   <div className="animate-in fade-in slide-in-from-right-8 duration-700" style={{ animationDelay: "0ms" }}>
-                    <Card className="p-6 bg-card/95 backdrop-blur-sm border-border/50">
-                      <div className="text-4xl font-bold text-accent mb-2">3-5%</div>
-                      <p className="text-muted-foreground">Average lift in open rates</p>
+                    <Card className="p-5 bg-card border-border">
+                      <div className="text-3xl font-bold text-accent mb-1">3-5%</div>
+                      <p className="text-sm text-muted-foreground">Average lift in open rates</p>
                     </Card>
                   </div>
                   <div className="animate-in fade-in slide-in-from-right-8 duration-700" style={{ animationDelay: "100ms" }}>
-                    <Card className="p-6 bg-card/95 backdrop-blur-sm border-border/50">
-                      <div className="text-4xl font-bold text-accent mb-2">10</div>
-                      <p className="text-muted-foreground">Ranked subject variants</p>
+                    <Card className="p-5 bg-card border-border">
+                      <div className="text-3xl font-bold text-accent mb-1">10</div>
+                      <p className="text-sm text-muted-foreground">Ranked subject variants</p>
                     </Card>
                   </div>
                   <div className="animate-in fade-in slide-in-from-right-8 duration-700" style={{ animationDelay: "200ms" }}>
-                    <Card className="p-6 bg-card/95 backdrop-blur-sm border-border/50">
-                      <div className="text-4xl font-bold text-accent mb-2">&lt;30s</div>
-                      <p className="text-muted-foreground">Generation time</p>
+                    <Card className="p-5 bg-card border-border">
+                      <div className="text-3xl font-bold text-accent mb-1">&lt;30s</div>
+                      <p className="text-sm text-muted-foreground">Generation time</p>
                     </Card>
                   </div>
                   <div className="animate-in fade-in slide-in-from-right-8 duration-700" style={{ animationDelay: "300ms" }}>
-                    <Card className="p-6 bg-card/95 backdrop-blur-sm border-border/50">
-                      <div className="text-4xl font-bold text-accent mb-2">100%</div>
-                      <p className="text-muted-foreground">Explainable AI</p>
+                    <Card className="p-5 bg-card border-border">
+                      <div className="text-3xl font-bold text-accent mb-1">100%</div>
+                      <p className="text-sm text-muted-foreground">Explainable AI</p>
                     </Card>
                   </div>
-                </div>
               </div>
             </div>
           </section>

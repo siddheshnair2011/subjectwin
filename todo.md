@@ -219,3 +219,10 @@
 - [x] Add parallax depth effect as content scrolls over hero (backdrop-blur and semi-transparent overlays)
 - [x] Animate statistics cards popping up from the sides (slide-in-from-right animations)
 - [x] Ensure hero depth meter stays visible on the right (fixed background maintains visibility)
+
+
+## UI Cleanup
+
+- [x] Fix statistics cards overlapping with hero background (moved to right edge with proper background)
+- [x] Improve spacing and padding for clean card presentation (reduced padding and gaps)
+- [x] Ensure cards don't show hero elements behind them (added bg-background/98 section background)
