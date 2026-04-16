@@ -13,6 +13,8 @@ import Storefront from "./pages/Storefront";
 import ConnectDashboard from "./pages/ConnectDashboard";
 import Settings from "./pages/Settings";
 import Upgrade from "./pages/Upgrade";
+import OrderConfirmation from "./pages/OrderConfirmation";
+import BillingHistory from "./pages/BillingHistory";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -26,7 +28,9 @@ function Router() {
       <Route path={"/dashboard/connect"} component={ConnectDashboard} />
       <Route path={"/dashboard/settings"} component={Settings} />
       <Route path={"/dashboard/upgrade"} component={Upgrade} />
+      <Route path={"/dashboard/billing"} component={BillingHistory} />
       <Route path={"/storefront"} component={Storefront} />
+      <Route path={"/order-confirmation"} component={OrderConfirmation} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>

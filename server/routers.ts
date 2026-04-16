@@ -27,6 +27,7 @@ import {
 } from "./db";
 import { invokeLLM } from "./_core/llm";
 import { connectRouter } from "./routers-connect";
+import { billingRouter } from "./routers-billing";
 
 export const appRouter = router({
   system: systemRouter,
@@ -209,6 +210,9 @@ Format as JSON array with objects: { text, predictedLift, tone, explanation }`;
 
   // Stripe Connect integration for marketplace
   connect: connectRouter,
+
+  // Billing and invoices
+  billing: billingRouter,
 
   // Subscription checkout
   checkout: router({

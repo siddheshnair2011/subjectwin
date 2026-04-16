@@ -35,7 +35,7 @@
 - [x] Store selected variants and campaign linkage
 
 ## Phase 6: Analysis History & Dashboard
-- [ ] Build analysis history table/list view
+- [x] Build analysis history table/list view (in Dashboard)
 - [ ] Implement prediction accuracy comparison (predicted vs actual)
 - [ ] Create trend reporting by campaign type and tone
 - [ ] Build confidence indicators based on accumulated data
@@ -52,10 +52,10 @@
 ## Phase 8: Polish & Testing
 - [x] Conduct vitest unit tests for core features
 - [x] Verify elegant design and polish across all pages
-- [ ] Test subscription enforcement and limits
-- [ ] Validate AI output quality and consistency
+- [x] Test subscription enforcement and limits
+- [x] Validate AI output quality and consistency
 - [ ] Performance optimization and accessibility review
-- [ ] Create final checkpoint and deploy
+- [x] Create final checkpoint and deploy
 
 ## Completed Features
 - [x] Database schema with 8 tables (brandProfiles, campaignAnalyses, variants, outcomes, subscriptions, usageTracking, seedSubjects, users)
@@ -95,6 +95,8 @@
 - [x] Build brand profile setup page (/dashboard/brand-profile)
 - [x] Build settings page (/dashboard/settings)
 - [x] Build upgrade/subscription page (/dashboard/upgrade)
+- [x] Build billing history page (/dashboard/billing)
+- [x] Build order confirmation page (/order-confirmation)
 - [x] Remove placeholder links or implement corresponding pages
 
 ### Quality Improvements
@@ -147,5 +149,14 @@
 ### Connect Dashboard
 - [x] Create seller dashboard showing account status
 - [x] Display onboarding requirements and deadlines
-- [x] Show earnings/transaction history
-- [x] Link to Stripe Express dashboard for sellers
+- [ ] Show earnings/transaction history
+- [ ] Link to Stripe Express dashboard for sellers
+
+### Billing Management
+- [x] Create billing history page with invoice list
+- [x] Implement invoice retrieval from Stripe
+- [x] Add subscription details display
+- [x] Implement cancel subscription at period end
+- [x] Implement reactivate subscription
+- [ ] Add payment method management
+- [ ] Implement plan downgrade flow
