@@ -231,3 +231,14 @@
 ## Critical Bugs to Fix
 
 - [x] Fix infinite loop in UnderwaterHeroStory scroll handler (used ref to track frame changes, memoized particles)
+
+
+## Hero Redesign - Visual Simulations
+
+- [x] Make hero background fixed/sticky so it stays visible while scrolling (fixed positioning with z-0)
+- [x] Create visual simulation for "Lost at Sea" (email inbox with unread emails)
+- [x] Create visual simulation for "Searching for Direction" (confused ChatGPT suggestions)
+- [x] Create visual simulation for "Light Emerges" (SubjectWin discovery)
+- [x] Create visual simulation for "Swimming Toward Light" (brand profile input)
+- [x] Create visual simulation for "Breaking Through" (variant generation results)
+- [x] Create visual simulation for "Clear Waters" (success and tracking)

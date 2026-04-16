@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, useMemo } from "react";
-import { Sparkles, ArrowRight } from "lucide-react";
+import { Sparkles, ArrowRight, Mail, AlertCircle, CheckCircle2, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getLoginUrl } from "@/const";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -7,16 +7,160 @@ import { useAuth } from "@/_core/hooks/useAuth";
 interface UnderwaterFrame {
   id: number;
   title: string;
-  subtitle: string;
   description: string;
   bgColor: string;
   lightColor: string;
   waterDepth: number;
-  scrollStart: number;
-  scrollEnd: number;
 }
 
-// Animated particle component for underwater effect
+// Email inbox simulation
+function EmailInboxSimulation({ opacity }: { opacity: number }) {
+  const emails = [
+    { subject: "Welcome to our store", open: false, lift: "?" },
+    { subject: "Your order is ready", open: false, lift: "?" },
+    { subject: "Limited time offer inside", open: false, lift: "?" },
+    { subject: "Check out what's new", open: false, lift: "?" },
+  ];
+
+  return (
+    <div className="space-y-2" style={{ opacity }}>
+      {emails.map((email, i) => (
+        <div
+          key={i}
+          className="flex items-center gap-3 p-3 rounded-lg bg-white/10 border border-white/20 hover:bg-white/15 transition-all"
+          style={{
+            transform: `translateX(${Math.sin(i) * 10}px)`,
+          }}
+        >
+          <Mail className="w-4 h-4 text-white/40" />
+          <div className="flex-1 min-w-0">
+            <p className="text-sm text-white/70 truncate">{email.subject}</p>
+          </div>
+          <span className="text-xs text-white/40 font-mono">{email.lift}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ChatGPT confusion simulation
+function ConfusionSimulation({ opacity }: { opacity: number }) {
+  const suggestions = [
+    "Try something catchy!",
+    "Make it exciting",
+    "Add urgency",
+    "Use emojis maybe?",
+    "Be creative!",
+  ];
+
+  return (
+    <div className="space-y-2" style={{ opacity }}>
+      {suggestions.map((suggestion, i) => (
+        <div
+          key={i}
+          className="p-3 rounded-lg bg-red-500/20 border border-red-500/30 animate-pulse"
+          style={{
+            animationDelay: `${i * 0.1}s`,
+            opacity: 0.5 + Math.sin(Date.now() / 1000 + i) * 0.3,
+          }}
+        >
+          <div className="flex items-start gap-2">
+            <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+            <p className="text-sm text-red-200">{suggestion}</p>
+          </div>
+        </div>
+      ))}
+      <div className="text-xs text-red-300 mt-4 italic">No rankings. No context. No data.</div>
+    </div>
+  );
+}
+
+// SubjectWin discovery simulation
+function DiscoverySimulation({ opacity }: { opacity: number }) {
+  return (
+    <div className="space-y-4" style={{ opacity }}>
+      <div className="text-center space-y-2">
+        <div className="inline-block p-3 rounded-full bg-emerald-500/20 border border-emerald-500/30">
+          <Sparkles className="w-6 h-6 text-emerald-300" />
+        </div>
+        <p className="text-emerald-200 font-semibold">SubjectWin Discovered</p>
+        <p className="text-sm text-white/60">Purpose-built for email optimization</p>
+      </div>
+    </div>
+  );
+}
+
+// Brand profile input simulation
+function BrandProfileSimulation({ opacity }: { opacity: number }) {
+  return (
+    <div className="space-y-3" style={{ opacity }}>
+      <div className="p-3 rounded-lg bg-blue-500/20 border border-blue-500/30">
+        <p className="text-xs text-blue-300 font-mono mb-1">Audience:</p>
+        <p className="text-sm text-blue-100">Tech-savvy professionals, 25-45</p>
+      </div>
+      <div className="p-3 rounded-lg bg-blue-500/20 border border-blue-500/30">
+        <p className="text-xs text-blue-300 font-mono mb-1">Industry:</p>
+        <p className="text-sm text-blue-100">SaaS / Technology</p>
+      </div>
+      <div className="p-3 rounded-lg bg-blue-500/20 border border-blue-500/30">
+        <p className="text-xs text-blue-300 font-mono mb-1">Tone:</p>
+        <p className="text-sm text-blue-100">Professional, conversational</p>
+      </div>
+    </div>
+  );
+}
+
+// Variant generation results simulation
+function VariantResultsSimulation({ opacity }: { opacity: number }) {
+  const variants = [
+    { text: "Your tech stack just got smarter", lift: "+4.2%" },
+    { text: "See what's new in SaaS", lift: "+3.8%" },
+    { text: "Unlock productivity gains", lift: "+3.5%" },
+  ];
+
+  return (
+    <div className="space-y-2" style={{ opacity }}>
+      {variants.map((variant, i) => (
+        <div
+          key={i}
+          className="p-3 rounded-lg bg-emerald-500/20 border border-emerald-500/30 hover:bg-emerald-500/30 transition-all"
+        >
+          <div className="flex items-start gap-2">
+            <TrendingUp className="w-4 h-4 text-emerald-300 flex-shrink-0 mt-0.5" />
+            <div className="flex-1 min-w-0">
+              <p className="text-sm text-emerald-100 truncate">{variant.text}</p>
+              <p className="text-xs text-emerald-300 font-mono mt-1">Predicted lift: {variant.lift}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// Success tracking simulation
+function SuccessSimulation({ opacity }: { opacity: number }) {
+  return (
+    <div className="space-y-3" style={{ opacity }}>
+      <div className="p-3 rounded-lg bg-emerald-500/20 border border-emerald-500/30">
+        <div className="flex items-center gap-2 mb-2">
+          <CheckCircle2 className="w-4 h-4 text-emerald-300" />
+          <p className="text-sm text-emerald-200 font-semibold">Campaign Sent</p>
+        </div>
+        <p className="text-xs text-emerald-300">10,000 recipients</p>
+      </div>
+      <div className="p-3 rounded-lg bg-emerald-500/20 border border-emerald-500/30">
+        <div className="flex items-center gap-2 mb-2">
+          <CheckCircle2 className="w-4 h-4 text-emerald-300" />
+          <p className="text-sm text-emerald-200 font-semibold">Results Tracked</p>
+        </div>
+        <p className="text-xs text-emerald-300">+3.2% actual lift achieved</p>
+      </div>
+    </div>
+  );
+}
+
+// Animated particle component
 function Particle({ 
   x, 
   y, 
@@ -45,36 +189,11 @@ function Particle({
   );
 }
 
-// Animated fish/creature
-function SwimmingCreature({ 
-  scrollProgress, 
-  direction = "right" 
-}: { 
-  scrollProgress: number; 
-  direction?: "left" | "right" 
-}) {
-  const offset = direction === "right" ? scrollProgress * 200 : -scrollProgress * 200;
-  const wobble = Math.sin(scrollProgress * Math.PI * 4) * 20;
-
-  return (
-    <div
-      className="absolute text-6xl transition-all duration-300"
-      style={{
-        transform: `translateX(${offset}px) translateY(${wobble}px) ${direction === "left" ? "scaleX(-1)" : ""}`,
-      }}
-    >
-      🐠
-    </div>
-  );
-}
-
 export default function UnderwaterHeroStory() {
   const { isAuthenticated } = useAuth();
   const [scrollY, setScrollY] = useState(0);
   const [currentFrame, setCurrentFrame] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  // Use a ref to track the last frame to prevent unnecessary updates
   const lastFrameRef = useRef(0);
 
   useEffect(() => {
@@ -86,12 +205,10 @@ export default function UnderwaterHeroStory() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Update current frame only when it actually changes
   useEffect(() => {
     const frameHeight = 150;
     const newFrame = Math.min(Math.floor(scrollY / frameHeight), 5);
     
-    // Only update state if frame actually changed
     if (newFrame !== lastFrameRef.current) {
       lastFrameRef.current = newFrame;
       setCurrentFrame(newFrame);
@@ -102,76 +219,56 @@ export default function UnderwaterHeroStory() {
     {
       id: 0,
       title: "Lost at Sea",
-      subtitle: "Diving into the unknown depths",
-      description: "You're swimming blind in the vast ocean. Every subject line feels like a random direction in the darkness.",
+      description: "Emails drift without direction. No data. No clarity.",
       bgColor: "from-blue-950 via-blue-900 to-blue-800",
       lightColor: "blue",
       waterDepth: 0,
-      scrollStart: 0,
-      scrollEnd: 150,
     },
     {
       id: 1,
       title: "Searching for Direction",
-      subtitle: "Confused currents pull you deeper",
-      description: "ChatGPT offers generic advice. No context. No rankings. You're spinning in circles, lost in the murky water.",
+      description: "ChatGPT offers generic advice. Confused currents pull you deeper.",
       bgColor: "from-blue-900 via-slate-900 to-slate-800",
       lightColor: "slate",
       waterDepth: 1,
-      scrollStart: 150,
-      scrollEnd: 300,
     },
     {
       id: 2,
       title: "The Light Emerges",
-      subtitle: "A glimmer breaks through the darkness",
-      description: "SubjectWin appears like bioluminescence in the deep. A guide specifically designed for your journey.",
+      description: "SubjectWin appears like bioluminescence. A purpose-built guide.",
       bgColor: "from-purple-950 via-purple-900 to-blue-900",
       lightColor: "purple",
       waterDepth: 2,
-      scrollStart: 300,
-      scrollEnd: 450,
     },
     {
       id: 3,
       title: "Swimming Toward the Light",
-      subtitle: "The water grows clearer, warmer",
-      description: "You share your brand context, audience, and campaign details. SubjectWin learns your ecosystem.",
+      description: "You share your brand context. SubjectWin learns your ecosystem.",
       bgColor: "from-indigo-950 via-indigo-900 to-blue-900",
       lightColor: "indigo",
       waterDepth: 3,
-      scrollStart: 450,
-      scrollEnd: 600,
     },
     {
       id: 4,
       title: "Breaking Through",
-      subtitle: "The surface is within reach",
-      description: "SubjectWin generates 10 ranked variants with predicted lift scores. Each one explained. No mysteries.",
+      description: "10 ranked variants with predicted lift. Each one explained.",
       bgColor: "from-cyan-950 via-cyan-900 to-blue-900",
       lightColor: "cyan",
       waterDepth: 4,
-      scrollStart: 600,
-      scrollEnd: 750,
     },
     {
       id: 5,
       title: "Into Clear Waters",
-      subtitle: "You've reached the sunlit shallows",
-      description: "Track results, learn from data, and improve every campaign. You're no longer lost. You're thriving.",
+      description: "Track results. Learn from data. Thrive.",
       bgColor: "from-emerald-950 via-teal-900 to-cyan-900",
       lightColor: "emerald",
       waterDepth: 5,
-      scrollStart: 750,
-      scrollEnd: 900,
     },
   ];
 
   const currentFrameData = frames[currentFrame];
-  const progress = Math.min(scrollY / 900, 1);
   const frameProgress = (scrollY % 150) / 150;
 
-  // Memoize particles to prevent unnecessary recalculations
   const particles = useMemo(() => {
     return Array.from({ length: 15 }).map((_, i) => ({
       id: i,
@@ -183,100 +280,102 @@ export default function UnderwaterHeroStory() {
     }));
   }, [scrollY]);
 
+  // Simulation component opacity based on frame
+  const getSimulationOpacity = (frameId: number) => {
+    const diff = Math.abs(currentFrame - frameId);
+    return diff === 0 ? 1 : diff === 1 ? 0.3 : 0;
+  };
+
   return (
-    <section 
-      ref={containerRef}
-      className={`relative min-h-screen overflow-hidden bg-gradient-to-b ${currentFrameData.bgColor} transition-all duration-500`}
-    >
-      {/* Animated background particles (bubbles) */}
-      <div className="absolute inset-0 overflow-hidden">
-        {particles.map((p) => (
-          <Particle key={p.id} {...p} />
-        ))}
-      </div>
-
-      {/* Parallax light rays */}
-      <div className="absolute inset-0 overflow-hidden opacity-20">
-        <div
-          className={`absolute top-0 left-1/4 w-1 h-full bg-gradient-to-b from-${currentFrameData.lightColor}-300 to-transparent blur-xl`}
-          style={{
-            transform: `translateY(${scrollY * 0.3}px)`,
-          }}
-        />
-        <div
-          className={`absolute top-0 right-1/3 w-1 h-full bg-gradient-to-b from-${currentFrameData.lightColor}-200 to-transparent blur-xl`}
-          style={{
-            transform: `translateY(${scrollY * 0.2}px)`,
-          }}
-        />
-        <div
-          className={`absolute top-0 right-1/4 w-1 h-full bg-gradient-to-b from-${currentFrameData.lightColor}-300 to-transparent blur-xl`}
-          style={{
-            transform: `translateY(${scrollY * 0.4}px)`,
-          }}
-        />
-      </div>
-
-      {/* Depth fog effect */}
-      <div
-        className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/40 pointer-events-none"
+    <>
+      {/* Fixed hero background */}
+      <div 
+        className={`fixed inset-0 z-0 bg-gradient-to-b ${currentFrameData.bgColor} transition-all duration-500 pointer-events-none`}
         style={{
-          opacity: 0.2 + currentFrame * 0.1,
+          height: "100vh",
         }}
-      />
+      >
+        {/* Animated background particles */}
+        <div className="absolute inset-0 overflow-hidden">
+          {particles.map((p) => (
+            <Particle key={p.id} {...p} />
+          ))}
+        </div>
 
-      {/* Swimming creatures */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <SwimmingCreature scrollProgress={frameProgress} direction="right" />
-        <SwimmingCreature scrollProgress={frameProgress * 0.7} direction="left" />
-      </div>
-
-      {/* Content container */}
-      <div className="relative z-10 container max-w-5xl mx-auto h-screen flex items-center justify-center px-4">
-        <div className="space-y-8 text-center max-w-2xl">
-          {/* Progress indicator */}
-          <div className="flex justify-center gap-2">
-            {frames.map((_, idx) => (
-              <div
-                key={idx}
-                className={`h-1 rounded-full transition-all duration-300 ${
-                  idx <= currentFrame
-                    ? `bg-${currentFrameData.lightColor}-400 w-8`
-                    : "bg-white/20 w-4"
-                }`}
-              />
-            ))}
-          </div>
-
-          {/* Animated title */}
+        {/* Parallax light rays */}
+        <div className="absolute inset-0 overflow-hidden opacity-20">
           <div
-            className="space-y-3 animate-in fade-in duration-700"
+            className={`absolute top-0 left-1/4 w-1 h-full bg-gradient-to-b from-${currentFrameData.lightColor}-300 to-transparent blur-xl`}
             style={{
-              opacity: Math.max(0, 1 - Math.abs(frameProgress - 0.5) * 2),
-              transform: `translateY(${Math.sin(frameProgress * Math.PI) * 20}px)`,
+              transform: `translateY(${scrollY * 0.3}px)`,
             }}
-          >
-            <h2 className="text-5xl md:text-6xl font-bold text-white drop-shadow-lg">
-              {currentFrameData.title}
-            </h2>
-            <p className={`text-xl text-${currentFrameData.lightColor}-200 font-semibold`}>
-              {currentFrameData.subtitle}
-            </p>
-            <p className="text-lg text-white/70 max-w-xl mx-auto">
-              {currentFrameData.description}
-            </p>
-          </div>
+          />
+          <div
+            className={`absolute top-0 right-1/3 w-1 h-full bg-gradient-to-b from-${currentFrameData.lightColor}-200 to-transparent blur-xl`}
+            style={{
+              transform: `translateY(${scrollY * 0.2}px)`,
+            }}
+          />
+        </div>
 
-          {/* Scroll indicator */}
-          <div className="flex justify-center items-center gap-2 text-white/60 text-sm pt-8">
-            <div className="animate-bounce">↓</div>
-            <span>Scroll to dive deeper</span>
-            <div className="animate-bounce" style={{ animationDelay: "0.2s" }}>↓</div>
+        {/* Depth fog effect */}
+        <div
+          className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/40 pointer-events-none"
+          style={{
+            opacity: 0.2 + currentFrame * 0.1,
+          }}
+        />
+
+        {/* Hero content - centered in viewport */}
+        <div className="fixed inset-0 z-10 flex items-center justify-center pointer-events-none">
+          <div className="w-full h-screen flex items-center justify-center px-4">
+            <div className="max-w-2xl w-full space-y-8">
+              {/* Progress indicator */}
+              <div className="flex justify-center gap-2">
+                {frames.map((_, idx) => (
+                  <div
+                    key={idx}
+                    className={`h-1 rounded-full transition-all duration-300 ${
+                      idx <= currentFrame
+                        ? `bg-${currentFrameData.lightColor}-400 w-8`
+                        : "bg-white/20 w-4"
+                    }`}
+                  />
+                ))}
+              </div>
+
+              {/* Title and description */}
+              <div className="text-center space-y-4">
+                <h2 className="text-5xl md:text-6xl font-bold text-white drop-shadow-lg">
+                  {currentFrameData.title}
+                </h2>
+                <p className="text-lg text-white/70">
+                  {currentFrameData.description}
+                </p>
+              </div>
+
+              {/* Visual simulations */}
+              <div className="max-w-sm mx-auto">
+                <EmailInboxSimulation opacity={getSimulationOpacity(0)} />
+                <ConfusionSimulation opacity={getSimulationOpacity(1)} />
+                <DiscoverySimulation opacity={getSimulationOpacity(2)} />
+                <BrandProfileSimulation opacity={getSimulationOpacity(3)} />
+                <VariantResultsSimulation opacity={getSimulationOpacity(4)} />
+                <SuccessSimulation opacity={getSimulationOpacity(5)} />
+              </div>
+
+              {/* Scroll indicator */}
+              <div className="flex justify-center items-center gap-2 text-white/60 text-sm pt-8">
+                <div className="animate-bounce">↓</div>
+                <span>Scroll to dive deeper</span>
+                <div className="animate-bounce" style={{ animationDelay: "0.2s" }}>↓</div>
+              </div>
+            </div>
           </div>
         </div>
 
         {/* Depth meter on the side */}
-        <div className="absolute right-8 top-1/2 -translate-y-1/2 hidden lg:flex flex-col items-center gap-4">
+        <div className="fixed right-8 top-1/2 -translate-y-1/2 z-10 hidden lg:flex flex-col items-center gap-4 pointer-events-none">
           <div className="text-white/40 text-sm font-mono">DEPTH</div>
           <div className="h-64 w-1 bg-white/10 rounded-full overflow-hidden">
             <div
@@ -290,38 +389,84 @@ export default function UnderwaterHeroStory() {
         </div>
       </div>
 
-      {/* Final CTA - appears at the end */}
-      <div
-        className={`absolute inset-0 z-20 flex items-center justify-center transition-all duration-500 pointer-events-none ${
-          currentFrame >= 5 ? "opacity-100 pointer-events-auto" : "opacity-0"
-        }`}
-      >
-        <div className="text-center space-y-6 animate-in fade-in duration-700">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm">
-            <Sparkles className="w-4 h-4 text-emerald-300" />
-            <span className="text-sm font-medium text-white">You've Arrived</span>
+      {/* Content sections that scroll over the hero */}
+      <div ref={containerRef} className="relative z-20 bg-background">
+        {/* Spacer to allow scrolling through hero frames */}
+        <div className="h-[900px]" />
+
+        {/* Statistics section */}
+        <section className="py-20 px-4">
+          <div className="container max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="p-6 rounded-xl bg-slate-50 border border-slate-200">
+                <div className="text-3xl font-bold text-blue-600 mb-2">3-5%</div>
+                <p className="text-slate-600">Average lift in open rates</p>
+              </div>
+              <div className="p-6 rounded-xl bg-slate-50 border border-slate-200">
+                <div className="text-3xl font-bold text-blue-600 mb-2">10</div>
+                <p className="text-slate-600">Ranked subject variants</p>
+              </div>
+              <div className="p-6 rounded-xl bg-slate-50 border border-slate-200">
+                <div className="text-3xl font-bold text-blue-600 mb-2">&lt;30s</div>
+                <p className="text-slate-600">Generation time</p>
+              </div>
+              <div className="p-6 rounded-xl bg-slate-50 border border-slate-200">
+                <div className="text-3xl font-bold text-blue-600 mb-2">100%</div>
+                <p className="text-slate-600">Explainable AI</p>
+              </div>
+            </div>
           </div>
+        </section>
 
-          <h3 className="text-4xl font-bold text-white drop-shadow-lg">
-            Ready to master email?
-          </h3>
+        {/* Rest of content sections */}
+        <section className="py-20 px-4 bg-white">
+          <div className="container max-w-6xl mx-auto">
+            <h2 className="text-4xl font-bold mb-12 text-center">Why SubjectWin Beats ChatGPT</h2>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="p-6 rounded-lg bg-blue-50 border border-blue-200">
+                <h3 className="font-bold text-lg mb-3 text-blue-900">SubjectWin</h3>
+                <ul className="space-y-2 text-sm text-blue-800">
+                  <li>✓ Purpose-built for email optimization</li>
+                  <li>✓ Understands your brand context</li>
+                  <li>✓ Ranks variants by predicted lift</li>
+                  <li>✓ Explains every recommendation</li>
+                  <li>✓ Tracks actual vs predicted performance</li>
+                </ul>
+              </div>
+              <div className="p-6 rounded-lg bg-red-50 border border-red-200">
+                <h3 className="font-bold text-lg mb-3 text-red-900">ChatGPT</h3>
+                <ul className="space-y-2 text-sm text-red-800">
+                  <li>✗ Generic writing assistant</li>
+                  <li>✗ No brand context awareness</li>
+                  <li>✗ No ranking or prioritization</li>
+                  <li>✗ No explainability</li>
+                  <li>✗ No performance tracking</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
 
-          <p className="text-white/80 max-w-xl mx-auto text-lg">
-            Start your SubjectWin journey free. No credit card required. 2 analyses per month to prove the value.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-            <a href={isAuthenticated ? "/dashboard/new-analysis" : getLoginUrl()}>
-              <Button size="lg" className="gap-2 bg-white text-slate-900 hover:bg-white/90">
-                Begin Your Journey
-                <ArrowRight className="w-4 h-4" />
+        {/* CTA section */}
+        <section className="py-20 px-4 bg-slate-900 text-white">
+          <div className="container max-w-4xl mx-auto text-center space-y-6">
+            <h2 className="text-4xl font-bold">Ready to master email?</h2>
+            <p className="text-lg text-slate-300">
+              Start your SubjectWin journey free. No credit card required. 2 analyses per month to prove the value.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+              <a href={isAuthenticated ? "/dashboard/new-analysis" : getLoginUrl()}>
+                <Button size="lg" className="gap-2 bg-white text-slate-900 hover:bg-white/90">
+                  Begin Your Journey
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              </a>
+              <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10">
+                View Demo
               </Button>
-            </a>
-            <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10">
-              View Demo
-            </Button>
+            </div>
           </div>
-        </div>
+        </section>
       </div>
 
       {/* CSS for animations */}
@@ -336,22 +481,7 @@ export default function UnderwaterHeroStory() {
             opacity: 0.6;
           }
         }
-
-        @keyframes swim {
-          0%, 100% {
-            transform: translateX(0) translateY(0);
-          }
-          25% {
-            transform: translateX(10px) translateY(-5px);
-          }
-          50% {
-            transform: translateX(20px) translateY(0);
-          }
-          75% {
-            transform: translateX(10px) translateY(5px);
-          }
-        }
       `}</style>
-    </section>
+    </>
   );
 }
