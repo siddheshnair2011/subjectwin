@@ -53,7 +53,7 @@ export default function Home() {
         {/* Content Overlay */}
         <div className="relative z-10">
           {/* Statistics Section - Appears as user scrolls */}
-          <section className="min-h-screen flex items-center justify-end bg-background/98">
+          <section className="min-h-screen flex items-center justify-end">
             <div className="pr-8">
               <div className="max-w-sm space-y-4">
                   <div className="animate-in fade-in slide-in-from-right-8 duration-700" style={{ animationDelay: "0ms" }}>
