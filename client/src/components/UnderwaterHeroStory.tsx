@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { Sparkles, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getLoginUrl } from "@/const";
@@ -72,35 +72,30 @@ export default function UnderwaterHeroStory() {
   const { isAuthenticated } = useAuth();
   const [scrollY, setScrollY] = useState(0);
   const [currentFrame, setCurrentFrame] = useState(0);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Use a ref to track the last frame to prevent unnecessary updates
+  const lastFrameRef = useRef(0);
+
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect();
-        setMousePos({
-          x: (e.clientX - rect.left) / rect.width,
-          y: (e.clientY - rect.top) / rect.height,
-        });
-      }
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
-  // Determine which story frame we're in
+  // Update current frame only when it actually changes
   useEffect(() => {
     const frameHeight = 150;
     const newFrame = Math.min(Math.floor(scrollY / frameHeight), 5);
-    setCurrentFrame(newFrame);
+    
+    // Only update state if frame actually changed
+    if (newFrame !== lastFrameRef.current) {
+      lastFrameRef.current = newFrame;
+      setCurrentFrame(newFrame);
+    }
   }, [scrollY]);
 
   const frames: UnderwaterFrame[] = [
@@ -176,15 +171,17 @@ export default function UnderwaterHeroStory() {
   const progress = Math.min(scrollY / 900, 1);
   const frameProgress = (scrollY % 150) / 150;
 
-  // Generate particles based on scroll position
-  const particles = Array.from({ length: 15 }).map((_, i) => ({
-    id: i,
-    x: (i * 7 + scrollY * 0.1) % 100,
-    y: (i * 6 + scrollY * 0.05) % 100,
-    size: 2 + (i % 3),
-    opacity: 0.3 + Math.sin(scrollY * 0.01 + i) * 0.2,
-    duration: 8 + (i % 4) * 2,
-  }));
+  // Memoize particles to prevent unnecessary recalculations
+  const particles = useMemo(() => {
+    return Array.from({ length: 15 }).map((_, i) => ({
+      id: i,
+      x: (i * 7 + scrollY * 0.1) % 100,
+      y: (i * 6 + scrollY * 0.05) % 100,
+      size: 2 + (i % 3),
+      opacity: 0.3 + Math.sin(scrollY * 0.01 + i) * 0.2,
+      duration: 8 + (i % 4) * 2,
+    }));
+  }, [scrollY]);
 
   return (
     <section 

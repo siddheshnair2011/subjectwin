@@ -226,3 +226,8 @@
 - [x] Fix statistics cards overlapping with hero background (moved to right edge with proper background)
 - [x] Improve spacing and padding for clean card presentation (reduced padding and gaps)
 - [x] Ensure cards don't show hero elements behind them (added bg-background/98 section background)
+
+
+## Critical Bugs to Fix
+
+- [x] Fix infinite loop in UnderwaterHeroStory scroll handler (used ref to track frame changes, memoized particles)
