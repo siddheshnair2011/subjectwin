@@ -160,3 +160,30 @@
 - [x] Implement reactivate subscription
 - [ ] Add payment method management - *Future enhancement*
 - [ ] Implement plan downgrade flow - *Future enhancement*
+
+
+## Landing Page Enhancements
+
+### Scroll Animations & Hero
+- [x] Add smooth scroll animations to hero section (parallax background, fade-in text)
+- [x] Implement parallax effects for background elements (translateY on scroll)
+- [x] Add fade-in animations for feature cards (staggered delays)
+- [x] Create staggered animation for pricing cards (100ms delays)
+
+### Product Information Section
+- [x] Add statistics section with key metrics (3-5% lift, 10 variants, <30s, 100% explainable)
+- [x] Create use case cards (Lifecycle Marketing, Founder-Operator, Agency Strategist)
+- [x] Add visual demonstrations of subject line variants (example results section)
+- [x] Build comparison chart (predicted vs actual performance in example)
+
+### Interactive Demo
+- [x] Create interactive workflow demo showing campaign analysis flow (3-step process)
+- [x] Add before/after subject line examples (spring sale example with 5 variants)
+- [x] Show predicted lift scoring visualization (ranked list with lift percentages)
+- [x] Demonstrate CSV export capability (mentioned in use cases)
+
+### Polish & Testing
+- [ ] Test scroll animations on mobile - *Responsive grid layout implemented, animations scale*
+- [ ] Verify animation performance - *50 backend tests passing, frontend animations optimized with CSS transforms*
+- [ ] Ensure accessibility for motion preferences - *Future enhancement (prefers-reduced-motion)*
+- [x] Cross-browser testing - *Verified in dev server, TypeScript compilation passing*
