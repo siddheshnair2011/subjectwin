@@ -3,6 +3,9 @@ import type { Express, Request, Response } from "express";
 import * as db from "../db";
 import { getSessionCookieOptions } from "./cookies";
 import { sdk } from "./sdk";
+import { notifyNewSignup } from "./notifications";
+import { users as usersTable } from "../../drizzle/schema";
+import { eq } from "drizzle-orm";
 
 function getQueryParam(req: Request, key: string): string | undefined {
   const value = req.query[key];
@@ -35,6 +38,26 @@ export function registerOAuthRoutes(app: Express) {
         loginMethod: userInfo.loginMethod ?? userInfo.platform ?? null,
         lastSignedIn: new Date(),
       });
+
+      // Notify owner of new sign-up
+      try {
+        const userDb = await db.getDb();
+        if (userDb) {
+          const userRows = await userDb.select().from(usersTable).where(eq(usersTable.openId, userInfo.openId)).limit(1);
+          if (userRows.length > 0) {
+            const newUser = userRows[0];
+            await notifyNewSignup({
+              id: newUser.id,
+              name: newUser.name,
+              email: newUser.email,
+              createdAt: newUser.createdAt,
+            });
+          }
+        }
+      } catch (error) {
+        console.error("[OAuth] Failed to send signup notification:", error);
+        // Don't block auth flow if notification fails
+      }
 
       const sessionToken = await sdk.createSessionToken(userInfo.openId, {
         name: userInfo.name || "",

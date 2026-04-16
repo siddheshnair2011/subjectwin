@@ -4,7 +4,7 @@
 - [x] Extend drizzle schema with brandProfiles, campaignAnalyses, variants, outcomes, subscriptions tables
 - [x] Generate and apply database migrations
 - [x] Set up Stripe integration with API key secrets
-- [ ] Configure owner notification system
+- [x] Configure owner notification system (sign-ups in oauth.ts, conversions in stripe-webhook.ts)
 
 ## Phase 2: Public Landing Page
 - [x] Design and build hero section with compelling headline and CTA
@@ -25,7 +25,7 @@
 - [x] Build seed subject line input interface
 - [x] Implement AI-powered subject line generation using built-in LLM
 - [x] Display ranked variants with predicted lift, tone, and explanation
-- [ ] Build variant regeneration feature
+- [ ] Build variant regeneration feature - *Future enhancement*
 
 ## Phase 5: Variant Selection & Export
 - [x] Implement one-click copy functionality for subject lines
@@ -54,7 +54,7 @@
 - [x] Verify elegant design and polish across all pages
 - [x] Test subscription enforcement and limits
 - [x] Validate AI output quality and consistency
-- [ ] Performance optimization and accessibility review
+- [ ] Performance optimization and accessibility review - *Future enhancement*
 - [x] Create final checkpoint and deploy
 
 ## Completed Features
