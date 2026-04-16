@@ -204,3 +204,9 @@
 - [x] Include performance metrics and accuracy comparisons
 - [x] Add detailed comparison cards showing ChatGPT limitations vs SubjectWin advantages
 - [x] Highlight speed, consistency, and integration benefits
+
+
+## Bug Fixes
+
+- [x] Fix subscription.get query returning undefined on dashboard (now returns default free subscription)
+- [x] Ensure subscription query handles null/missing subscriptions gracefully (returns default object)

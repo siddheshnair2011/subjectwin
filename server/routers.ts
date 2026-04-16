@@ -204,7 +204,22 @@ Format as JSON array with objects: { text, predictedLift, tone, explanation }`;
 
   subscription: router({
     get: protectedProcedure.query(async ({ ctx }) => {
-      return await getUserSubscription(ctx.user.id);
+      const subscription = await getUserSubscription(ctx.user.id);
+      if (subscription) return subscription;
+      // Return default free subscription if none exists
+      return {
+        id: 0,
+        userId: ctx.user.id,
+        plan: 'free',
+        status: 'active',
+        stripeCustomerId: null,
+        stripeSubscriptionId: null,
+        currentPeriodStart: new Date(),
+        currentPeriodEnd: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+        cancelAtPeriodEnd: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
     }),
   }),
 
