@@ -2,9 +2,10 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { getLoginUrl } from "@/const";
-import { ArrowRight, Zap, BarChart3, Lock, Sparkles, TrendingUp, CheckCircle2, Users, Lightbulb, Target, Mail, Check, X } from "lucide-react";
+import { ArrowRight, Zap, BarChart3, Lock, Sparkles, TrendingUp, CheckCircle2, Users, Lightbulb, Target, Check, X } from "lucide-react";
 import { Link } from "wouter";
 import { useEffect, useState } from "react";
+import HeroStory from "@/components/HeroStory";
 
 export default function Home() {
   const { user, isAuthenticated } = useAuth();
@@ -24,13 +25,7 @@ export default function Home() {
     setEmailIndex(newIndex);
   }, [scrollY]);
 
-  const sampleEmails = [
-    { subject: "🌸 Spring into savings—40% off ends tonight", sender: "Shop", opened: true, lift: "+4.8%" },
-    { subject: "Your spring refresh awaits: 40% off sitewide", sender: "Shop", opened: true, lift: "+3.9%" },
-    { subject: "Spring sale: 40% off everything (today only)", sender: "Shop", opened: false, lift: "+3.2%" },
-    { subject: "We're blooming with savings for you", sender: "Shop", opened: false, lift: "+2.1%" },
-    { subject: "40% off spring collection—limited time", sender: "Shop", opened: false, lift: "+1.5%" },
-  ];
+
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/20">
@@ -58,146 +53,11 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section with Interactive Email Client */}
-      <section className="container py-12 md:py-20 max-w-6xl mx-auto relative overflow-hidden">
-        {/* Animated background elements */}
-        <div 
-          className="absolute -top-40 -right-40 w-80 h-80 bg-accent/10 rounded-full blur-3xl"
-          style={{ transform: `translateY(${scrollY * 0.3}px)` }}
-        />
-        <div 
-          className="absolute -bottom-20 -left-40 w-80 h-80 bg-accent/5 rounded-full blur-3xl"
-          style={{ transform: `translateY(${scrollY * -0.2}px)` }}
-        />
-
-        <div className="grid md:grid-cols-2 gap-8 items-center relative z-10">
-          {/* Left: Text Content */}
-          <div className="space-y-6">
-            <div 
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 animate-in fade-in slide-in-from-bottom-4 duration-500"
-              style={{ opacity: Math.max(0, 1 - scrollY / 300) }}
-            >
-              <Zap className="w-4 h-4 text-accent" />
-              <span className="text-sm font-medium text-accent">AI-Powered Email Optimization</span>
-            </div>
-
-            <h1 
-              className="text-4xl md:text-5xl font-bold text-foreground leading-tight animate-in fade-in slide-in-from-bottom-4 duration-700"
-              style={{ 
-                opacity: Math.max(0, 1 - scrollY / 400),
-                transform: `translateY(${scrollY * 0.1}px)`
-              }}
-            >
-              Predict Email Open Rates
-              <span className="block text-accent">Before You Send</span>
-            </h1>
-
-            <p 
-              className="text-lg text-muted-foreground animate-in fade-in slide-in-from-bottom-4 duration-1000"
-              style={{ opacity: Math.max(0, 1 - scrollY / 500) }}
-            >
-              SubjectWin helps D2C ecommerce brands generate, rank, and optimize email subject lines with AI. Increase open rates by 3–5% without waiting for A/B tests.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 pt-4 animate-in fade-in slide-in-from-bottom-4 duration-1000">
-              <a href={isAuthenticated ? "/dashboard/new-analysis" : getLoginUrl()}>
-                <Button size="lg" className="gap-2">
-                  Get Started Free
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
-              </a>
-              <Button size="lg" variant="outline">
-                View Demo
-              </Button>
-            </div>
-
-            <div className="pt-4 text-sm text-muted-foreground animate-in fade-in duration-1000">
-              <p>Free tier: 2 analyses/month • No credit card required</p>
-            </div>
-          </div>
-
-          {/* Right: Interactive Email Client */}
-          <div className="hidden md:block">
-            <div className="bg-muted/30 rounded-lg border border-border p-4 shadow-lg">
-              {/* Email Client Header */}
-              <div className="flex items-center gap-2 pb-4 border-b border-border">
-                <Mail className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm font-semibold text-foreground">Inbox</span>
-                <span className="ml-auto text-xs text-muted-foreground">5 emails</span>
-              </div>
-
-              {/* Email List */}
-              <div className="space-y-2 mt-4">
-                {sampleEmails.map((email, idx) => (
-                  <div
-                    key={idx}
-                    className={`p-3 rounded-lg border transition-all duration-500 cursor-pointer ${
-                      idx <= emailIndex
-                        ? "bg-accent/10 border-accent/50"
-                        : "bg-background border-border hover:border-accent/30"
-                    }`}
-                    style={{
-                      opacity: 1,
-                      transform: idx <= emailIndex ? "translateX(4px)" : "translateX(0)"
-                    }}
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${
-                        idx <= emailIndex ? "bg-accent" : "bg-muted"
-                      }`} />
-                      <div className="flex-1 min-w-0">
-                        <p className={`text-sm font-medium truncate ${
-                          idx <= emailIndex ? "text-foreground" : "text-muted-foreground"
-                        }`}>
-                          {email.sender}
-                        </p>
-                        <p className={`text-xs truncate ${
-                          idx <= emailIndex ? "text-foreground" : "text-muted-foreground/70"
-                        }`}>
-                          {email.subject}
-                        </p>
-                      </div>
-                      {idx <= emailIndex && (
-                        <div className="flex-shrink-0 text-right">
-                          <div className="text-xs font-semibold text-accent">{email.lift}</div>
-                          <div className="text-xs text-accent/70">Predicted</div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Email Preview */}
-              {emailIndex >= 0 && (
-                <div className="mt-4 pt-4 border-t border-border animate-in fade-in duration-300">
-                  <div className="text-sm space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium text-foreground">{sampleEmails[emailIndex].sender}</span>
-                      <span className="text-xs text-accent font-semibold">{sampleEmails[emailIndex].lift} lift</span>
-                    </div>
-                    <p className="text-foreground font-semibold text-sm">{sampleEmails[emailIndex].subject}</p>
-                    <div className="flex items-center gap-2 pt-2">
-                      <div className="flex-1 h-1 bg-muted rounded-full overflow-hidden">
-                        <div className="h-full bg-accent w-4/5" />
-                      </div>
-                      <span className="text-xs text-muted-foreground">80% confidence</span>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Scroll Indicator */}
-            <p className="text-center text-xs text-muted-foreground mt-4">
-              Scroll down to see more variants →
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* Hero Story Section */}
+      <HeroStory />
 
       {/* Statistics Section */}
-      <section className="container py-20 max-w-5xl mx-auto">
+      <section className="container py-20 max-w-5xl mx-auto mt-20">
         <div className="grid md:grid-cols-4 gap-8">
           <div className="text-center animate-in fade-in slide-in-from-bottom-4 duration-700" style={{ animationDelay: "0ms" }}>
             <div className="text-4xl font-bold text-accent mb-2">3-5%</div>
