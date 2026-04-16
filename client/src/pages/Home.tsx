@@ -2,19 +2,35 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { getLoginUrl } from "@/const";
-import { ArrowRight, Zap, BarChart3, Lock, Sparkles, TrendingUp, CheckCircle2, Users, Lightbulb, Target } from "lucide-react";
+import { ArrowRight, Zap, BarChart3, Lock, Sparkles, TrendingUp, CheckCircle2, Users, Lightbulb, Target, Mail, Check, X } from "lucide-react";
 import { Link } from "wouter";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const { user, isAuthenticated } = useAuth();
   const [scrollY, setScrollY] = useState(0);
+  const [emailIndex, setEmailIndex] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Update email index based on scroll position (hero section is ~600px tall)
+  useEffect(() => {
+    const heroHeight = 600;
+    const newIndex = Math.min(Math.floor(scrollY / 150), 4);
+    setEmailIndex(newIndex);
+  }, [scrollY]);
+
+  const sampleEmails = [
+    { subject: "🌸 Spring into savings—40% off ends tonight", sender: "Shop", opened: true, lift: "+4.8%" },
+    { subject: "Your spring refresh awaits: 40% off sitewide", sender: "Shop", opened: true, lift: "+3.9%" },
+    { subject: "Spring sale: 40% off everything (today only)", sender: "Shop", opened: false, lift: "+3.2%" },
+    { subject: "We're blooming with savings for you", sender: "Shop", opened: false, lift: "+2.1%" },
+    { subject: "40% off spring collection—limited time", sender: "Shop", opened: false, lift: "+1.5%" },
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/20">
@@ -42,8 +58,8 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section with Parallax */}
-      <section className="container py-20 md:py-32 max-w-4xl mx-auto relative overflow-hidden">
+      {/* Hero Section with Interactive Email Client */}
+      <section className="container py-12 md:py-20 max-w-6xl mx-auto relative overflow-hidden">
         {/* Animated background elements */}
         <div 
           className="absolute -top-40 -right-40 w-80 h-80 bg-accent/10 rounded-full blur-3xl"
@@ -54,47 +70,128 @@ export default function Home() {
           style={{ transform: `translateY(${scrollY * -0.2}px)` }}
         />
 
-        <div className="text-center space-y-6 relative z-10">
-          <div 
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 animate-in fade-in slide-in-from-bottom-4 duration-500"
-            style={{ opacity: Math.max(0, 1 - scrollY / 300) }}
-          >
-            <Zap className="w-4 h-4 text-accent" />
-            <span className="text-sm font-medium text-accent">AI-Powered Email Optimization</span>
-          </div>
+        <div className="grid md:grid-cols-2 gap-8 items-center relative z-10">
+          {/* Left: Text Content */}
+          <div className="space-y-6">
+            <div 
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 animate-in fade-in slide-in-from-bottom-4 duration-500"
+              style={{ opacity: Math.max(0, 1 - scrollY / 300) }}
+            >
+              <Zap className="w-4 h-4 text-accent" />
+              <span className="text-sm font-medium text-accent">AI-Powered Email Optimization</span>
+            </div>
 
-          <h1 
-            className="text-5xl md:text-6xl font-bold text-foreground leading-tight animate-in fade-in slide-in-from-bottom-4 duration-700"
-            style={{ 
-              opacity: Math.max(0, 1 - scrollY / 400),
-              transform: `translateY(${scrollY * 0.1}px)`
-            }}
-          >
-            Predict Email Open Rates
-            <span className="block text-accent">Before You Send</span>
-          </h1>
+            <h1 
+              className="text-4xl md:text-5xl font-bold text-foreground leading-tight animate-in fade-in slide-in-from-bottom-4 duration-700"
+              style={{ 
+                opacity: Math.max(0, 1 - scrollY / 400),
+                transform: `translateY(${scrollY * 0.1}px)`
+              }}
+            >
+              Predict Email Open Rates
+              <span className="block text-accent">Before You Send</span>
+            </h1>
 
-          <p 
-            className="text-lg text-muted-foreground max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-1000"
-            style={{ opacity: Math.max(0, 1 - scrollY / 500) }}
-          >
-            SubjectWin helps D2C ecommerce brands generate, rank, and optimize email subject lines with AI. Increase open rates by 3–5% without waiting for A/B tests.
-          </p>
+            <p 
+              className="text-lg text-muted-foreground animate-in fade-in slide-in-from-bottom-4 duration-1000"
+              style={{ opacity: Math.max(0, 1 - scrollY / 500) }}
+            >
+              SubjectWin helps D2C ecommerce brands generate, rank, and optimize email subject lines with AI. Increase open rates by 3–5% without waiting for A/B tests.
+            </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4 animate-in fade-in slide-in-from-bottom-4 duration-1000">
-            <a href={isAuthenticated ? "/dashboard/new-analysis" : getLoginUrl()}>
-              <Button size="lg" className="gap-2">
-                Get Started Free
-                <ArrowRight className="w-4 h-4" />
+            <div className="flex flex-col sm:flex-row gap-4 pt-4 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+              <a href={isAuthenticated ? "/dashboard/new-analysis" : getLoginUrl()}>
+                <Button size="lg" className="gap-2">
+                  Get Started Free
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              </a>
+              <Button size="lg" variant="outline">
+                View Demo
               </Button>
-            </a>
-            <Button size="lg" variant="outline">
-              View Demo
-            </Button>
+            </div>
+
+            <div className="pt-4 text-sm text-muted-foreground animate-in fade-in duration-1000">
+              <p>Free tier: 2 analyses/month • No credit card required</p>
+            </div>
           </div>
 
-          <div className="pt-8 text-sm text-muted-foreground animate-in fade-in duration-1000">
-            <p>Free tier: 2 analyses/month • No credit card required</p>
+          {/* Right: Interactive Email Client */}
+          <div className="hidden md:block">
+            <div className="bg-muted/30 rounded-lg border border-border p-4 shadow-lg">
+              {/* Email Client Header */}
+              <div className="flex items-center gap-2 pb-4 border-b border-border">
+                <Mail className="w-4 h-4 text-muted-foreground" />
+                <span className="text-sm font-semibold text-foreground">Inbox</span>
+                <span className="ml-auto text-xs text-muted-foreground">5 emails</span>
+              </div>
+
+              {/* Email List */}
+              <div className="space-y-2 mt-4">
+                {sampleEmails.map((email, idx) => (
+                  <div
+                    key={idx}
+                    className={`p-3 rounded-lg border transition-all duration-500 cursor-pointer ${
+                      idx <= emailIndex
+                        ? "bg-accent/10 border-accent/50"
+                        : "bg-background border-border hover:border-accent/30"
+                    }`}
+                    style={{
+                      opacity: 1,
+                      transform: idx <= emailIndex ? "translateX(4px)" : "translateX(0)"
+                    }}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${
+                        idx <= emailIndex ? "bg-accent" : "bg-muted"
+                      }`} />
+                      <div className="flex-1 min-w-0">
+                        <p className={`text-sm font-medium truncate ${
+                          idx <= emailIndex ? "text-foreground" : "text-muted-foreground"
+                        }`}>
+                          {email.sender}
+                        </p>
+                        <p className={`text-xs truncate ${
+                          idx <= emailIndex ? "text-foreground" : "text-muted-foreground/70"
+                        }`}>
+                          {email.subject}
+                        </p>
+                      </div>
+                      {idx <= emailIndex && (
+                        <div className="flex-shrink-0 text-right">
+                          <div className="text-xs font-semibold text-accent">{email.lift}</div>
+                          <div className="text-xs text-accent/70">Predicted</div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Email Preview */}
+              {emailIndex >= 0 && (
+                <div className="mt-4 pt-4 border-t border-border animate-in fade-in duration-300">
+                  <div className="text-sm space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="font-medium text-foreground">{sampleEmails[emailIndex].sender}</span>
+                      <span className="text-xs text-accent font-semibold">{sampleEmails[emailIndex].lift} lift</span>
+                    </div>
+                    <p className="text-foreground font-semibold text-sm">{sampleEmails[emailIndex].subject}</p>
+                    <div className="flex items-center gap-2 pt-2">
+                      <div className="flex-1 h-1 bg-muted rounded-full overflow-hidden">
+                        <div className="h-full bg-accent w-4/5" />
+                      </div>
+                      <span className="text-xs text-muted-foreground">80% confidence</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Scroll Indicator */}
+            <p className="text-center text-xs text-muted-foreground mt-4">
+              Scroll down to see more variants →
+            </p>
           </div>
         </div>
       </section>
@@ -118,6 +215,167 @@ export default function Home() {
             <div className="text-4xl font-bold text-accent mb-2">100%</div>
             <p className="text-muted-foreground">Explainable AI</p>
           </div>
+        </div>
+      </section>
+
+      {/* SubjectWin vs ChatGPT Comparison */}
+      <section className="container py-20 max-w-5xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+            Why SubjectWin Beats ChatGPT
+          </h2>
+          <p className="text-lg text-muted-foreground">
+            While ChatGPT is great for general writing, SubjectWin is purpose-built for email subject line optimization.
+          </p>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-border">
+                <th className="text-left py-4 px-4 font-semibold text-foreground">Feature</th>
+                <th className="text-center py-4 px-4 font-semibold text-foreground">SubjectWin</th>
+                <th className="text-center py-4 px-4 font-semibold text-foreground">ChatGPT</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-border hover:bg-muted/50 transition-colors">
+                <td className="py-4 px-4 text-foreground font-medium">Predicted Lift Scoring</td>
+                <td className="text-center py-4 px-4">
+                  <Check className="w-5 h-5 text-accent mx-auto" />
+                </td>
+                <td className="text-center py-4 px-4">
+                  <X className="w-5 h-5 text-muted-foreground mx-auto" />
+                </td>
+              </tr>
+              <tr className="border-b border-border hover:bg-muted/50 transition-colors">
+                <td className="py-4 px-4 text-foreground font-medium">Ranked Variants (Best to Worst)</td>
+                <td className="text-center py-4 px-4">
+                  <Check className="w-5 h-5 text-accent mx-auto" />
+                </td>
+                <td className="text-center py-4 px-4">
+                  <X className="w-5 h-5 text-muted-foreground mx-auto" />
+                </td>
+              </tr>
+              <tr className="border-b border-border hover:bg-muted/50 transition-colors">
+                <td className="py-4 px-4 text-foreground font-medium">Brand Context Memory</td>
+                <td className="text-center py-4 px-4">
+                  <Check className="w-5 h-5 text-accent mx-auto" />
+                </td>
+                <td className="text-center py-4 px-4">
+                  <X className="w-5 h-5 text-muted-foreground mx-auto" />
+                </td>
+              </tr>
+              <tr className="border-b border-border hover:bg-muted/50 transition-colors">
+                <td className="py-4 px-4 text-foreground font-medium">Tone Classification</td>
+                <td className="text-center py-4 px-4">
+                  <Check className="w-5 h-5 text-accent mx-auto" />
+                </td>
+                <td className="text-center py-4 px-4">
+                  <X className="w-5 h-5 text-muted-foreground mx-auto" />
+                </td>
+              </tr>
+              <tr className="border-b border-border hover:bg-muted/50 transition-colors">
+                <td className="py-4 px-4 text-foreground font-medium">Outcome Tracking & Accuracy</td>
+                <td className="text-center py-4 px-4">
+                  <Check className="w-5 h-5 text-accent mx-auto" />
+                </td>
+                <td className="text-center py-4 px-4">
+                  <X className="w-5 h-5 text-muted-foreground mx-auto" />
+                </td>
+              </tr>
+              <tr className="border-b border-border hover:bg-muted/50 transition-colors">
+                <td className="py-4 px-4 text-foreground font-medium">One-Click Export (CSV/Klaviyo)</td>
+                <td className="text-center py-4 px-4">
+                  <Check className="w-5 h-5 text-accent mx-auto" />
+                </td>
+                <td className="text-center py-4 px-4">
+                  <X className="w-5 h-5 text-muted-foreground mx-auto" />
+                </td>
+              </tr>
+              <tr className="border-b border-border hover:bg-muted/50 transition-colors">
+                <td className="py-4 px-4 text-foreground font-medium">Consistency Across Campaigns</td>
+                <td className="text-center py-4 px-4">
+                  <Check className="w-5 h-5 text-accent mx-auto" />
+                </td>
+                <td className="text-center py-4 px-4">
+                  <X className="w-5 h-5 text-muted-foreground mx-auto" />
+                </td>
+              </tr>
+              <tr className="hover:bg-muted/50 transition-colors">
+                <td className="py-4 px-4 text-foreground font-medium">Email-Specific Optimization</td>
+                <td className="text-center py-4 px-4">
+                  <Check className="w-5 h-5 text-accent mx-auto" />
+                </td>
+                <td className="text-center py-4 px-4">
+                  <X className="w-5 h-5 text-muted-foreground mx-auto" />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        {/* Detailed Comparison Cards */}
+        <div className="grid md:grid-cols-2 gap-8 mt-16">
+          <Card className="p-8 border border-border animate-in fade-in slide-in-from-bottom-4 duration-700" style={{ animationDelay: "0ms" }}>
+            <h3 className="text-xl font-semibold text-foreground mb-4">ChatGPT Approach</h3>
+            <ul className="space-y-3 text-sm text-muted-foreground">
+              <li className="flex items-start gap-3">
+                <span className="text-accent mt-1">•</span>
+                <span>Generic AI trained on broad internet data, not email marketing</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-accent mt-1">•</span>
+                <span>No performance metrics—you guess which subject line is best</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-accent mt-1">•</span>
+                <span>Requires manual copy-paste and context re-entry each time</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-accent mt-1">•</span>
+                <span>No way to track if suggestions actually improved open rates</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-accent mt-1">•</span>
+                <span>Inconsistent results across different prompts and campaigns</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-accent mt-1">•</span>
+                <span>Slow iteration: write prompt → copy result → test → repeat</span>
+              </li>
+            </ul>
+          </Card>
+
+          <Card className="p-8 border-2 border-accent bg-accent/5 animate-in fade-in slide-in-from-bottom-4 duration-700" style={{ animationDelay: "100ms" }}>
+            <h3 className="text-xl font-semibold text-foreground mb-4">SubjectWin Approach</h3>
+            <ul className="space-y-3 text-sm text-muted-foreground">
+              <li className="flex items-start gap-3">
+                <Check className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                <span>Purpose-built AI trained specifically on email performance data</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                <span>Predicts open-rate lift for each variant—ranked best to worst</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                <span>Save brand profile once, reuse across all campaigns</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                <span>Upload actual results to compare predictions vs reality</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                <span>Consistent, repeatable results tied to your brand voice</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                <span>One-click export to Klaviyo or CSV—ready to send</span>
+              </li>
+            </ul>
+          </Card>
         </div>
       </section>
 
@@ -329,7 +587,6 @@ export default function Home() {
             <p className="text-muted-foreground">
               Tell us about your campaign type, offer, audience, and brand tone. Optionally provide 1–3 seed subject lines to build from.
             </p>
-            {/* Connector line */}
             <div className="hidden md:block absolute top-12 left-full w-full h-0.5 bg-gradient-to-r from-accent to-transparent -z-10" style={{ width: "calc(100% + 2rem)" }} />
           </div>
 
@@ -339,7 +596,6 @@ export default function Home() {
             <p className="text-muted-foreground">
               Our AI creates 10 ranked subject line options, each with predicted lift, tone classification, and a clear explanation of why it may perform well.
             </p>
-            {/* Connector line */}
             <div className="hidden md:block absolute top-12 left-full w-full h-0.5 bg-gradient-to-r from-accent to-transparent -z-10" style={{ width: "calc(100% + 2rem)" }} />
           </div>
 
