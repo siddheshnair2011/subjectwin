@@ -1,9 +1,14 @@
 import { COOKIE_NAME } from "@shared/const";
+import Stripe from "stripe";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router, protectedProcedure } from "./_core/trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
+
+const stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
+  apiVersion: "2026-03-25" as any,
+});
 import {
   getBrandProfile,
   upsertBrandProfile,
@@ -21,6 +26,7 @@ import {
   incrementUsageCount,
 } from "./db";
 import { invokeLLM } from "./_core/llm";
+import { connectRouter } from "./routers-connect";
 
 export const appRouter = router({
   system: systemRouter,
@@ -199,6 +205,44 @@ Format as JSON array with objects: { text, predictedLift, tone, explanation }`;
     get: protectedProcedure.query(async ({ ctx }) => {
       return await getUserSubscription(ctx.user.id);
     }),
+  }),
+
+  // Stripe Connect integration for marketplace
+  connect: connectRouter,
+
+  // Subscription checkout
+  checkout: router({
+    create: publicProcedure
+      .input(z.object({
+        priceId: z.string(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        try {
+          const origin = ctx.req.headers.origin || "https://example.com";
+          const session = await stripeClient.checkout.sessions.create({
+            line_items: [
+              {
+                price: input.priceId,
+                quantity: 1,
+              },
+            ],
+            mode: "subscription",
+            success_url: `${origin}/dashboard?upgrade=success`,
+            cancel_url: `${origin}/dashboard/upgrade`,
+            customer_email: ctx.user?.email || undefined,
+          });
+
+          return {
+            url: session.url,
+          };
+        } catch (error: any) {
+          console.error("[Checkout] Failed to create session:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: error?.message || "Failed to create checkout session",
+          });
+        }
+      }),
   }),
 });
 

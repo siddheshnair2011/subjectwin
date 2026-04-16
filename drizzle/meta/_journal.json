@@ -15,6 +15,13 @@
       "when": 1776280898999,
       "tag": "0001_sharp_dracula",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1776314628144,
+      "tag": "0002_light_random",
+      "breakpoints": true
     }
   ]
 }

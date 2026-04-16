@@ -9,6 +9,10 @@ import Dashboard from "./pages/Dashboard";
 import NewAnalysis from "./pages/NewAnalysis";
 import AnalysisDetail from "./pages/AnalysisDetail";
 import BrandProfile from "./pages/BrandProfile";
+import Storefront from "./pages/Storefront";
+import ConnectDashboard from "./pages/ConnectDashboard";
+import Settings from "./pages/Settings";
+import Upgrade from "./pages/Upgrade";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -19,6 +23,10 @@ function Router() {
       <Route path={"/dashboard/brand-profile"} component={BrandProfile} />
       <Route path={"/dashboard/new-analysis"} component={NewAnalysis} />
       <Route path={"/dashboard/analysis/:id"} component={AnalysisDetail} />
+      <Route path={"/dashboard/connect"} component={ConnectDashboard} />
+      <Route path={"/dashboard/settings"} component={Settings} />
+      <Route path={"/dashboard/upgrade"} component={Upgrade} />
+      <Route path={"/storefront"} component={Storefront} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>

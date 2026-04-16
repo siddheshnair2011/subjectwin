@@ -16,8 +16,8 @@
 ## Phase 3: Authentication & Dashboard
 - [x] Implement Manus OAuth login flow (via template)
 - [x] Build dashboard layout with stats and analysis list
-- [ ] Create brand profile setup page
-- [ ] Add user settings and profile management
+- [x] Create brand profile setup page
+- [x] Add user settings and profile management
 - [x] Implement logout functionality
 
 ## Phase 4: Campaign Analysis Workflow
@@ -42,12 +42,12 @@
 - [ ] Add filtering and sorting capabilities
 
 ## Phase 7: Subscription & Billing
-- [ ] Implement free tier enforcement (2 analyses/month limit)
-- [ ] Integrate Stripe for subscription management
-- [ ] Build subscription plan selection and checkout flow
-- [ ] Implement plan upgrade/downgrade functionality
-- [ ] Add billing history and invoice management
-- [ ] Trigger owner notifications on sign-up and paid conversion
+- [x] Implement free tier enforcement (2 analyses/month limit)
+- [x] Integrate Stripe for subscription management
+- [x] Build subscription plan selection and checkout flow
+- [x] Implement plan upgrade/downgrade functionality
+- [x] Add billing history and invoice management
+- [x] Trigger owner notifications on sign-up and paid conversion
 
 ## Phase 8: Polish & Testing
 - [x] Conduct vitest unit tests for core features
@@ -93,8 +93,8 @@
 
 ### Missing Pages
 - [x] Build brand profile setup page (/dashboard/brand-profile)
-- [ ] Build settings page (/dashboard/settings)
-- [ ] Build upgrade/subscription page (/dashboard/upgrade)
+- [x] Build settings page (/dashboard/settings)
+- [x] Build upgrade/subscription page (/dashboard/upgrade)
 - [x] Remove placeholder links or implement corresponding pages
 
 ### Quality Improvements
@@ -102,3 +102,50 @@
 - [ ] Add loading skeletons for better UX
 - [x] Validate AI generation output
 - [x] Test subscription enforcement end-to-end (27 tests passing)
+
+
+## Phase 5: Stripe Connect Integration (NEW)
+
+### Connected Account Management
+- [x] Extend database schema to store Stripe Connect account IDs per user
+- [x] Create API endpoint to create connected accounts using Stripe V2 API
+- [x] Implement account creation with proper display_name, contact_email, and capabilities
+- [x] Store mapping from user to connected account ID in database
+
+### Account Onboarding
+- [x] Create UI for "Onboard to collect payments" button
+- [x] Implement account status display showing onboarding progress
+- [x] Create account link generation endpoint using V2 API
+- [x] Handle account link redirect and status updates
+- [x] Display requirements status and completion status
+
+### Webhook Handling for Connect
+- [x] Create webhook handler for v2.account[requirements].updated events
+- [x] Create webhook handler for v2.account[configuration.recipient].capability_status_updated events
+- [x] Parse thin events and update account status
+- [x] Log requirement changes for debugging
+
+### Product Management
+- [x] Create endpoint to create products at platform level
+- [x] Store product-to-connected-account mapping
+- [x] Build UI for product creation form
+- [x] Display list of created products
+
+### Storefront
+- [x] Create storefront page displaying all products
+- [x] Show products grouped by connected account/seller
+- [x] Implement product filtering and search
+- [x] Add product detail view
+
+### Checkout & Payments
+- [x] Create checkout session with destination charges
+- [x] Implement application fee calculation
+- [x] Set up transfer_data to route funds to connected account
+- [x] Handle checkout success and failure redirects
+- [x] Display order confirmation page
+
+### Connect Dashboard
+- [x] Create seller dashboard showing account status
+- [x] Display onboarding requirements and deadlines
+- [x] Show earnings/transaction history
+- [x] Link to Stripe Express dashboard for sellers

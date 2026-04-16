@@ -1,8 +1,11 @@
 import type { Express, Request, Response } from "express";
 import express from "express";
 import Stripe from "stripe";
-import { updateSubscription, createSubscription, getUserSubscription } from "../db";
+import { updateSubscription, createSubscription, getUserSubscription, getDb } from "../db";
 import { notifyOwner } from "./notification";
+import { notifyPaidConversion, notifyNewSignup } from "./notifications";
+import { users } from "../../drizzle/schema";
+import { eq } from "drizzle-orm";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
   apiVersion: "2026-03-25.dahlia" as any,
@@ -78,10 +81,17 @@ export function registerStripeWebhook(app: Express) {
             }
 
             // Notify owner of new paid conversion
-            await notifyOwner({
-              title: "New Paid Subscription",
-              content: `${customerName || customerEmail} upgraded to ${plan} plan (User ID: ${userId})`,
-            });
+            try {
+              const db = await getDb();
+              if (db) {
+                const userRows = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+                if (userRows.length > 0) {
+                  await notifyPaidConversion(userRows[0], plan as "growth" | "accelerator");
+                }
+              }
+            } catch (error) {
+              console.error("[Webhook] Failed to send conversion notification:", error);
+            }
 
             console.log(`[Webhook] Subscription created/updated for user ${userId}`);
             break;

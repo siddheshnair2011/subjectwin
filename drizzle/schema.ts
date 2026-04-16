@@ -15,6 +15,10 @@ import {
  * Extend this file with additional tables as your product grows.
  * Columns use camelCase to match both database fields and generated types.
  */
+/**
+ * Stripe Connect integration requires storing connected account IDs.
+ * Also add stripeConnectAccountId to users table for quick lookup.
+ */
 export const users = mysqlTable("users", {
   /**
    * Surrogate primary key. Auto-incremented numeric value managed by the database.
@@ -30,10 +34,13 @@ export const users = mysqlTable("users", {
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
   lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
+  stripeConnectAccountId: varchar("stripeConnectAccountId", { length: 255 }), // Optional: for sellers
 });
 
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
+
+// Note: stripeConnectAccountId field added to users table for Stripe Connect integration
 
 /**
  * Brand profiles store audience and tone preferences for each user.
@@ -150,3 +157,63 @@ export const usageTracking = mysqlTable("usageTracking", {
 
 export type UsageTracking = typeof usageTracking.$inferSelect;
 export type InsertUsageTracking = typeof usageTracking.$inferInsert;
+
+/**
+ * Stripe Connect accounts for sellers onboarding to the platform.
+ * Maps users to their connected account IDs for payment processing.
+ */
+export const stripeConnectAccounts = mysqlTable("stripeConnectAccounts", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().unique(),
+  stripeAccountId: varchar("stripeAccountId", { length: 255 }).notNull().unique(),
+  displayName: varchar("displayName", { length: 255 }),
+  contactEmail: varchar("contactEmail", { length: 320 }),
+  onboardingStatus: mysqlEnum("onboardingStatus", ["pending", "in_progress", "completed", "failed"]).default("pending").notNull(),
+  requirementsDue: json("requirementsDue"), // JSON array of pending requirements
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type StripeConnectAccount = typeof stripeConnectAccounts.$inferSelect;
+export type InsertStripeConnectAccount = typeof stripeConnectAccounts.$inferInsert;
+
+/**
+ * Platform products for the marketplace.
+ * Products are created at the platform level and linked to seller accounts.
+ */
+export const products = mysqlTable("products", {
+  id: int("id").autoincrement().primaryKey(),
+  stripeProductId: varchar("stripeProductId", { length: 255 }).notNull().unique(),
+  stripeConnectAccountId: varchar("stripeConnectAccountId", { length: 255 }).notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
+  description: text("description"),
+  priceInCents: int("priceInCents").notNull(),
+  currency: varchar("currency", { length: 3 }).default("usd").notNull(),
+  stripePriceId: varchar("stripePriceId", { length: 255 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Product = typeof products.$inferSelect;
+export type InsertProduct = typeof products.$inferInsert;
+
+/**
+ * Orders represent customer purchases from the marketplace.
+ * Tracks checkout sessions and payment status.
+ */
+export const orders = mysqlTable("orders", {
+  id: int("id").autoincrement().primaryKey(),
+  stripeCheckoutSessionId: varchar("stripeCheckoutSessionId", { length: 255 }).notNull().unique(),
+  productId: int("productId").notNull(),
+  stripeConnectAccountId: varchar("stripeConnectAccountId", { length: 255 }).notNull(),
+  quantity: int("quantity").default(1).notNull(),
+  amountInCents: int("amountInCents").notNull(),
+  applicationFeeInCents: int("applicationFeeInCents").notNull(),
+  status: mysqlEnum("status", ["pending", "completed", "failed", "canceled"]).default("pending").notNull(),
+  customerEmail: varchar("customerEmail", { length: 320 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Order = typeof orders.$inferSelect;
+export type InsertOrder = typeof orders.$inferInsert;
