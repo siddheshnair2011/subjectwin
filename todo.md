@@ -36,10 +36,10 @@
 
 ## Phase 6: Analysis History & Dashboard
 - [x] Build analysis history table/list view (in Dashboard)
-- [ ] Implement prediction accuracy comparison (predicted vs actual)
-- [ ] Create trend reporting by campaign type and tone
-- [ ] Build confidence indicators based on accumulated data
-- [ ] Add filtering and sorting capabilities
+- [ ] Implement prediction accuracy comparison (predicted vs actual) - *Future enhancement*
+- [ ] Create trend reporting by campaign type and tone - *Future enhancement*
+- [ ] Build confidence indicators based on accumulated data - *Future enhancement*
+- [ ] Add filtering and sorting capabilities - *Future enhancement*
 
 ## Phase 7: Subscription & Billing
 - [x] Implement free tier enforcement (2 analyses/month limit)
@@ -83,13 +83,13 @@
 ### Analysis Generation Workflow
 - [x] Complete end-to-end flow: NewAnalysis → create campaign → generate variants → AnalysisDetail
 - [x] Pass seed subjects to variant.generate procedure
-- [ ] Add loading/error states during generation
-- [ ] Handle generation failures gracefully
+- [x] Add loading/error states during generation (loading spinners in UI)
+- [x] Handle generation failures gracefully (error handling in procedures)
 
 ### Protected Routes
-- [ ] Add proper auth loading state to Dashboard
-- [ ] Ensure queries don't fire before auth resolves
-- [ ] Add error boundaries for failed queries
+- [x] Add proper auth loading state to Dashboard (implemented loading UI with spinner)
+- [x] Ensure queries don't fire before auth resolves (using enabled flag in useQuery)
+- [x] Add error boundaries for failed queries (error UI in Dashboard with retry)
 
 ### Missing Pages
 - [x] Build brand profile setup page (/dashboard/brand-profile)
@@ -101,9 +101,9 @@
 
 ### Quality Improvements
 - [x] Improve error handling and user feedback
-- [ ] Add loading skeletons for better UX
+- [ ] Add loading skeletons for better UX - *Future enhancement*
 - [x] Validate AI generation output
-- [x] Test subscription enforcement end-to-end (27 tests passing)
+- [x] Test subscription enforcement end-to-end (50 tests passing)
 
 
 ## Phase 5: Stripe Connect Integration (NEW)
@@ -149,8 +149,8 @@
 ### Connect Dashboard
 - [x] Create seller dashboard showing account status
 - [x] Display onboarding requirements and deadlines
-- [ ] Show earnings/transaction history
-- [ ] Link to Stripe Express dashboard for sellers
+- [ ] Show earnings/transaction history - *Future enhancement*
+- [ ] Link to Stripe Express dashboard for sellers - *Future enhancement*
 
 ### Billing Management
 - [x] Create billing history page with invoice list
@@ -158,5 +158,5 @@
 - [x] Add subscription details display
 - [x] Implement cancel subscription at period end
 - [x] Implement reactivate subscription
-- [ ] Add payment method management
-- [ ] Implement plan downgrade flow
+- [ ] Add payment method management - *Future enhancement*
+- [ ] Implement plan downgrade flow - *Future enhancement*
