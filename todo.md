@@ -210,3 +210,12 @@
 
 - [x] Fix subscription.get query returning undefined on dashboard (now returns default free subscription)
 - [x] Ensure subscription query handles null/missing subscriptions gracefully (returns default object)
+
+
+## Hero Redesign - Sticky Background with Scrolling Content
+
+- [x] Make underwater hero background fixed/sticky as user scrolls (using fixed positioning)
+- [x] Layer statistics and content sections on top of hero (z-index layering with relative z-10)
+- [x] Add parallax depth effect as content scrolls over hero (backdrop-blur and semi-transparent overlays)
+- [x] Animate statistics cards popping up from the sides (slide-in-from-right animations)
+- [x] Ensure hero depth meter stays visible on the right (fixed background maintains visibility)
