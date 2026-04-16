@@ -5,25 +5,11 @@ import { getLoginUrl } from "@/const";
 import { ArrowRight, Zap, BarChart3, Lock, Sparkles, TrendingUp, CheckCircle2, Users, Lightbulb, Target, Check, X } from "lucide-react";
 import { Link } from "wouter";
 import { useEffect, useState } from "react";
-import HeroStory from "@/components/HeroStory";
+import UnderwaterHeroStory from "@/components/UnderwaterHeroStory";
 
 export default function Home() {
   const { user, isAuthenticated } = useAuth();
-  const [scrollY, setScrollY] = useState(0);
-  const [emailIndex, setEmailIndex] = useState(0);
 
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Update email index based on scroll position (hero section is ~600px tall)
-  useEffect(() => {
-    const heroHeight = 600;
-    const newIndex = Math.min(Math.floor(scrollY / 150), 4);
-    setEmailIndex(newIndex);
-  }, [scrollY]);
 
 
 
@@ -53,8 +39,8 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Story Section */}
-      <HeroStory />
+      {/* Underwater Hero Story Section */}
+      <UnderwaterHeroStory />
 
       {/* Statistics Section */}
       <section className="container py-20 max-w-5xl mx-auto mt-20">
