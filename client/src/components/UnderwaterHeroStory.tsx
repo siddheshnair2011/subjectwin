@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { Sparkles, ArrowRight, Mail, AlertCircle, CheckCircle2, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getLoginUrl } from "@/const";
@@ -8,10 +8,20 @@ interface UnderwaterFrame {
   id: number;
   title: string;
   description: string;
-  bgColor: string;
+  bgGradient: string;
   lightColor: string;
   waterDepth: number;
 }
+
+// Color mappings for light rays
+const lightColorMap: Record<string, { rgb: string; hex: string }> = {
+  blue: { rgb: "59, 130, 246", hex: "#3b82f6" },
+  slate: { rgb: "100, 116, 139", hex: "#64748b" },
+  purple: { rgb: "147, 51, 234", hex: "#9333ea" },
+  indigo: { rgb: "79, 70, 229", hex: "#4f46e5" },
+  cyan: { rgb: "34, 211, 238", hex: "#22d3ee" },
+  emerald: { rgb: "16, 185, 129", hex: "#10b981" },
+};
 
 // Email inbox simulation
 function EmailInboxSimulation({ opacity }: { opacity: number }) {
@@ -61,7 +71,6 @@ function ConfusionSimulation({ opacity }: { opacity: number }) {
           className="p-3 rounded-lg bg-red-500/20 border border-red-500/30 animate-pulse"
           style={{
             animationDelay: `${i * 0.1}s`,
-            opacity: 0.5 + Math.sin(Date.now() / 1000 + i) * 0.3,
           }}
         >
           <div className="flex items-start gap-2">
@@ -104,33 +113,29 @@ function BrandProfileSimulation({ opacity }: { opacity: number }) {
       </div>
       <div className="p-3 rounded-lg bg-blue-500/20 border border-blue-500/30">
         <p className="text-xs text-blue-300 font-mono mb-1">Tone:</p>
-        <p className="text-sm text-blue-100">Professional, conversational</p>
+        <p className="text-sm text-blue-100">Professional yet conversational</p>
       </div>
     </div>
   );
 }
 
-// Variant generation results simulation
+// Variant results simulation
 function VariantResultsSimulation({ opacity }: { opacity: number }) {
   const variants = [
-    { text: "Your tech stack just got smarter", lift: "+4.2%" },
-    { text: "See what's new in SaaS", lift: "+3.8%" },
-    { text: "Unlock productivity gains", lift: "+3.5%" },
+    { text: "Spring Sale: 30% Off Tech", lift: "+4.2%" },
+    { text: "Limited Time: Save on Your Favorites", lift: "+3.8%" },
+    { text: "Exclusive Offer Inside", lift: "+3.1%" },
+    { text: "Your Spring Refresh Awaits", lift: "+2.9%" },
+    { text: "Don't Miss Out on Spring Deals", lift: "+2.4%" },
   ];
 
   return (
     <div className="space-y-2" style={{ opacity }}>
-      {variants.map((variant, i) => (
-        <div
-          key={i}
-          className="p-3 rounded-lg bg-emerald-500/20 border border-emerald-500/30 hover:bg-emerald-500/30 transition-all"
-        >
-          <div className="flex items-start gap-2">
-            <TrendingUp className="w-4 h-4 text-emerald-300 flex-shrink-0 mt-0.5" />
-            <div className="flex-1 min-w-0">
-              <p className="text-sm text-emerald-100 truncate">{variant.text}</p>
-              <p className="text-xs text-emerald-300 font-mono mt-1">Predicted lift: {variant.lift}</p>
-            </div>
+      {variants.map((v, i) => (
+        <div key={i} className="p-3 rounded-lg bg-cyan-500/20 border border-cyan-500/30">
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-cyan-100">{v.text}</p>
+            <span className="text-xs font-bold text-cyan-300">{v.lift}</span>
           </div>
         </div>
       ))}
@@ -138,7 +143,7 @@ function VariantResultsSimulation({ opacity }: { opacity: number }) {
   );
 }
 
-// Success tracking simulation
+// Success simulation
 function SuccessSimulation({ opacity }: { opacity: number }) {
   return (
     <div className="space-y-3" style={{ opacity }}>
@@ -147,7 +152,7 @@ function SuccessSimulation({ opacity }: { opacity: number }) {
           <CheckCircle2 className="w-4 h-4 text-emerald-300" />
           <p className="text-sm text-emerald-200 font-semibold">Campaign Sent</p>
         </div>
-        <p className="text-xs text-emerald-300">10,000 recipients</p>
+        <p className="text-xs text-emerald-300">50,000 subscribers reached</p>
       </div>
       <div className="p-3 rounded-lg bg-emerald-500/20 border border-emerald-500/30">
         <div className="flex items-center gap-2 mb-2">
@@ -220,7 +225,7 @@ export default function UnderwaterHeroStory() {
       id: 0,
       title: "Lost at Sea",
       description: "Emails drift without direction. No data. No clarity.",
-      bgColor: "from-blue-950 via-blue-900 to-blue-800",
+      bgGradient: "linear-gradient(to bottom, #172554, #1e3a8a, #1e40af)",
       lightColor: "blue",
       waterDepth: 0,
     },
@@ -228,7 +233,7 @@ export default function UnderwaterHeroStory() {
       id: 1,
       title: "Searching for Direction",
       description: "ChatGPT offers generic advice. Confused currents pull you deeper.",
-      bgColor: "from-blue-900 via-slate-900 to-slate-800",
+      bgGradient: "linear-gradient(to bottom, #1e3a8a, #1e293b, #0f172a)",
       lightColor: "slate",
       waterDepth: 1,
     },
@@ -236,7 +241,7 @@ export default function UnderwaterHeroStory() {
       id: 2,
       title: "The Light Emerges",
       description: "SubjectWin appears like bioluminescence. A purpose-built guide.",
-      bgColor: "from-purple-950 via-purple-900 to-blue-900",
+      bgGradient: "linear-gradient(to bottom, #2d1b4e, #3730a3, #1e3a8a)",
       lightColor: "purple",
       waterDepth: 2,
     },
@@ -244,7 +249,7 @@ export default function UnderwaterHeroStory() {
       id: 3,
       title: "Swimming Toward the Light",
       description: "You share your brand context. SubjectWin learns your ecosystem.",
-      bgColor: "from-indigo-950 via-indigo-900 to-blue-900",
+      bgGradient: "linear-gradient(to bottom, #3730a3, #312e81, #1e3a8a)",
       lightColor: "indigo",
       waterDepth: 3,
     },
@@ -252,7 +257,7 @@ export default function UnderwaterHeroStory() {
       id: 4,
       title: "Breaking Through",
       description: "10 ranked variants with predicted lift. Each one explained.",
-      bgColor: "from-cyan-950 via-cyan-900 to-blue-900",
+      bgGradient: "linear-gradient(to bottom, #164e63, #0e7490, #1e3a8a)",
       lightColor: "cyan",
       waterDepth: 4,
     },
@@ -260,7 +265,7 @@ export default function UnderwaterHeroStory() {
       id: 5,
       title: "Into Clear Waters",
       description: "Track results. Learn from data. Thrive.",
-      bgColor: "from-emerald-950 via-teal-900 to-cyan-900",
+      bgGradient: "linear-gradient(to bottom, #064e3b, #0d9488, #0e7490)",
       lightColor: "emerald",
       waterDepth: 5,
     },
@@ -286,12 +291,16 @@ export default function UnderwaterHeroStory() {
     return diff === 0 ? 1 : diff === 1 ? 0.3 : 0;
   };
 
+  // Get light color RGB for dynamic styling
+  const lightColorRGB = lightColorMap[currentFrameData.lightColor].rgb;
+
   return (
     <>
       {/* Fixed hero background */}
       <div 
-        className={`fixed inset-0 z-0 bg-gradient-to-b ${currentFrameData.bgColor} transition-all duration-500 pointer-events-none`}
+        className="fixed inset-0 z-0 transition-all duration-500 pointer-events-none"
         style={{
+          background: currentFrameData.bgGradient,
           height: "100vh",
         }}
       >
@@ -305,14 +314,26 @@ export default function UnderwaterHeroStory() {
         {/* Parallax light rays */}
         <div className="absolute inset-0 overflow-hidden opacity-20">
           <div
-            className={`absolute top-0 left-1/4 w-1 h-full bg-gradient-to-b from-${currentFrameData.lightColor}-300 to-transparent blur-xl`}
             style={{
+              position: "absolute",
+              top: 0,
+              left: "25%",
+              width: "4px",
+              height: "100%",
+              background: `linear-gradient(to bottom, rgba(${lightColorRGB}, 0.3), transparent)`,
+              filter: "blur(40px)",
               transform: `translateY(${scrollY * 0.3}px)`,
             }}
           />
           <div
-            className={`absolute top-0 right-1/3 w-1 h-full bg-gradient-to-b from-${currentFrameData.lightColor}-200 to-transparent blur-xl`}
             style={{
+              position: "absolute",
+              top: 0,
+              right: "33%",
+              width: "4px",
+              height: "100%",
+              background: `linear-gradient(to bottom, rgba(${lightColorRGB}, 0.2), transparent)`,
+              filter: "blur(40px)",
               transform: `translateY(${scrollY * 0.2}px)`,
             }}
           />
@@ -335,11 +356,15 @@ export default function UnderwaterHeroStory() {
                 {frames.map((_, idx) => (
                   <div
                     key={idx}
-                    className={`h-1 rounded-full transition-all duration-300 ${
-                      idx <= currentFrame
-                        ? `bg-${currentFrameData.lightColor}-400 w-8`
-                        : "bg-white/20 w-4"
-                    }`}
+                    style={{
+                      height: "4px",
+                      borderRadius: "9999px",
+                      transition: "all 300ms",
+                      background: idx <= currentFrame 
+                        ? `rgba(${lightColorRGB}, 0.8)` 
+                        : "rgba(255, 255, 255, 0.2)",
+                      width: idx <= currentFrame ? "32px" : "16px",
+                    }}
                   />
                 ))}
               </div>
@@ -379,9 +404,11 @@ export default function UnderwaterHeroStory() {
           <div className="text-white/40 text-sm font-mono">DEPTH</div>
           <div className="h-64 w-1 bg-white/10 rounded-full overflow-hidden">
             <div
-              className={`w-full bg-gradient-to-b from-${currentFrameData.lightColor}-400 to-${currentFrameData.lightColor}-600 transition-all duration-300`}
               style={{
+                width: "100%",
                 height: `${(currentFrame / 5) * 100}%`,
+                background: `linear-gradient(to bottom, rgba(${lightColorRGB}, 0.8), rgba(${lightColorRGB}, 1))`,
+                transition: "all 300ms",
               }}
             />
           </div>
