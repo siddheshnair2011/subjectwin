@@ -242,3 +242,8 @@
 - [x] Create visual simulation for "Swimming Toward Light" (brand profile input)
 - [x] Create visual simulation for "Breaking Through" (variant generation results)
 - [x] Create visual simulation for "Clear Waters" (success and tracking)
+
+
+## Current Issues
+
+- [x] UnderwaterHeroStory component disappeared from landing page (fixed missing useAuth import)
