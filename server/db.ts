@@ -279,7 +279,7 @@ export async function createCampaignOutcome(data: {
 
 export async function getCampaignOutcome(analysisId: number) {
   const db = await getDb();
-  if (!db) return undefined;
+  if (!db) return null;
 
   const result = await db
     .select()
@@ -287,7 +287,7 @@ export async function getCampaignOutcome(analysisId: number) {
     .where(eq(campaignOutcomes.analysisId, analysisId))
     .limit(1);
 
-  return result.length > 0 ? result[0] : undefined;
+  return result.length > 0 ? result[0] : null;
 }
 
 // Subscription queries

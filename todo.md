@@ -260,3 +260,8 @@
 - [x] All 50 backend tests passing
 - [x] TypeScript compilation passing
 - [x] Dev server running successfully
+
+
+## Bug Fixes
+
+- [x] Fixed outcome.get query returning undefined instead of null when no outcome found (April 30, 2026)
