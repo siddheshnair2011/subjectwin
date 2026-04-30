@@ -102,7 +102,7 @@ export async function getUserByOpenId(openId: string) {
 // Brand Profile queries
 export async function getBrandProfile(userId: number) {
   const db = await getDb();
-  if (!db) return undefined;
+  if (!db) return null;
 
   const result = await db
     .select()
@@ -110,7 +110,7 @@ export async function getBrandProfile(userId: number) {
     .where(eq(brandProfiles.userId, userId))
     .limit(1);
 
-  return result.length > 0 ? result[0] : undefined;
+  return result.length > 0 ? result[0] : null;
 }
 
 export async function upsertBrandProfile(userId: number, data: {
